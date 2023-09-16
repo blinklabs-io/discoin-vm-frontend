@@ -94,11 +94,11 @@ export default function MobileMenuCardano() {
             <a
               target="_blank"
               rel="noreferrer"
-              href="https://docs.tosidrop.io/"
+              href="https://docs.discoin.family/"
               className="mb-2.5 text-inactive"
             >
               <FontAwesomeIcon className="mr-2.5" icon={faBook} />
-              Docs&nbsp;
+              Discoin Docs&nbsp;
               <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
             </a>
           </div>

@@ -13,9 +13,9 @@ export interface IVMSettings {
   confirmations_required: number;
 }
 
-export interface ITosiFeatures {
-  tosi_fee: number;
-  tosi_fee_whitelist: any;
+export interface IClaimFeatures {
+  claim_fee: number;
+  claim_fee_whitelist: any;
   claim_enabled: boolean;
   network: string;
   ergo_enabled: boolean;

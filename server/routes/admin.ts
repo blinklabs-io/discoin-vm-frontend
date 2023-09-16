@@ -1,5 +1,5 @@
 import express from "express";
-import { TOSIDROP_ADMIN_KEY } from "..";
+import { CLAIM_ADMIN_KEY } from "..";
 import { Dto } from "../../client/src/entities/dto";
 import { typedErrorHandlerWrapper } from "../middlewares/error-handler";
 import { persistentCache } from "../utils/cache";
@@ -11,7 +11,7 @@ router.post(
   typedErrorHandlerWrapper<Dto.PostBannerText>(async (req, res) => {
     const { adminKey, text } = req.body;
 
-    if (adminKey !== TOSIDROP_ADMIN_KEY) {
+    if (adminKey !== CLAIM_ADMIN_KEY) {
       throw createErrorWithCode(HttpStatusCode.UNAUTHORIZED, "Wrong admin key");
     }
 

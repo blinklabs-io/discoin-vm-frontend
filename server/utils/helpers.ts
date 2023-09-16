@@ -16,7 +16,6 @@ import {
 import { GetPricePairs } from "../../client/src/entities/min.entities";
 import {
   ClaimableToken,
-  GetPools,
   GetRewardsDto,
   VmDeliveredReward,
   VmTokenInfoMap,
@@ -152,18 +151,6 @@ export async function getEpochParams(epochNo: number) {
 
 export async function postPoolInfo(pools: string[]) {
   return postFromKoios<PoolInfo[]>("pool_info", { _pool_bech32_ids: pools });
-}
-
-export async function getPools() {
-  let pools: GetPools | undefined = longTermCache.get("pools");
-  if (pools == null) {
-    pools = await getFromVM<GetPools>("get_pools");
-    Object.values(pools).forEach((pool) => {
-      pool.id = convertPoolIdToBech32(pool.id);
-    });
-    longTermCache.set("pools", pools);
-  }
-  return pools;
 }
 
 export async function getTokens(options?: {

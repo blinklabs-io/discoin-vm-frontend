@@ -15,7 +15,7 @@ interface Props {
 interface ISettings {
   vmFee: number;
   txFee: number;
-  tosiFee: number;
+  claimFee: number;
 }
 
 const TransactionDetail = ({
@@ -27,7 +27,7 @@ const TransactionDetail = ({
   const [settings, setSettings] = useState<ISettings>({
     vmFee: 0,
     txFee: 440000,
-    tosiFee: 500000,
+    claimFee: 500000,
   });
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const TransactionDetail = ({
       const settingsFromFeatures = await getFeatures();
       setSettings({
         ...settings,
-        tosiFee: settingsFromFeatures.tosi_fee,
+        claimFee: settingsFromFeatures.claim_fee,
         vmFee: settingsFromVM.withdrawal_fee,
       });
     };
@@ -52,7 +52,7 @@ const TransactionDetail = ({
 
   const calcReturnedAda = () => {
     let returnedAda = deposit - settings.vmFee - calcTxFee();
-    if (unlock && !isWhitelisted) returnedAda -= settings.tosiFee;
+    if (unlock && !isWhitelisted) returnedAda -= settings.claimFee;
     return returnedAda;
   };
 
@@ -76,12 +76,12 @@ const TransactionDetail = ({
       {unlock && !isWhitelisted ? (
         <div className="p-1 flex items-center flex-row-reverse border-b border-color text-premium">
           <div className="w-28 text-right">
-            {lovelaceToAda(settings.tosiFee)} ADA
+            {lovelaceToAda(settings.claimFee)} ADA
           </div>
           <div className="tooltip-activator cursor-help text-right">
-            TosiFee <FontAwesomeIcon icon={faQuestionCircle} />
+            Fee <FontAwesomeIcon icon={faQuestionCircle} />
             <div className="tooltip p-3.5 rounded-2xl right-5 bottom-4 absolute min-w-52 max-w-64">
-              TosiFee is applied to tokens that use TosiDrop services
+              Fee is applied to tokens that use this service
             </div>
           </div>
         </div>

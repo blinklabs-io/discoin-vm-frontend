@@ -116,23 +116,6 @@ export interface VmTokenInfo {
   info: string | null;
 }
 
-export interface GetPools {
-  [key: string]: PoolInfo;
-}
-
 type PoolVisibility = "t" | "f";
-
-export interface PoolInfo {
-  id: string;
-  ticker: string;
-  name: string;
-  enabled: string;
-  logo: string;
-  last_delegator_refresh: string;
-  loading_addr: string;
-  description: string;
-  visible: PoolVisibility;
-  delegator_count: string;
-}
 
 export type VmTokenInfoMap = Record<string, VmTokenInfo>;

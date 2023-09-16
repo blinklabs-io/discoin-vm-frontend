@@ -69,8 +69,8 @@ export default function RewardsView({
             <FontAwesomeIcon icon={faStar} />
           </div>
           {poolInfo?.isWhitelisted
-            ? "No TosiFee on claims because you have staked to a TosiDrop core pool"
-            : "These tokens incur a TosiFee when claiming"}
+            ? "No fee on claims because you have staked to a whitelisted pool"
+            : "These tokens incur a fee when claiming"}
         </div>
         <div className={"flex flex-row flex-wrap gap-4"}>
           {claimableTokens.map((token, index) => {
@@ -99,21 +99,21 @@ export default function RewardsView({
           <div>Selected {numberOfSelectedTokens} token</div>
           <div className="ml-auto flex flex-row w-fit gap-4">
             <button
-              className="tosi-button py-2.5 px-5 rounded-lg"
+              className="claim-button py-2.5 px-5 rounded-lg"
               onClick={selectAll}
             >
               Unselect All
             </button>
 
             <button
-              className="tosi-button py-2.5 px-5 rounded-lg"
+              className="claim-button py-2.5 px-5 rounded-lg"
               onClick={selectRandomTokens}
             >
               I'm feeling lucky
             </button>
 
             <button
-              className="tosi-button py-2.5 px-5 rounded-lg flex flex-row items-center"
+              className="claim-button py-2.5 px-5 rounded-lg flex flex-row items-center"
               disabled={numberOfSelectedTokens === 0}
               onClick={claimRewards}
             >

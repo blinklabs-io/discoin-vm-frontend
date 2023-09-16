@@ -1,20 +1,20 @@
 {
-    "name": "TosiDrop",
-    "short_name": "TosiDrop",
+    "name": "The Silk Toad Claims",
+    "short_name": "The Silk Toad Claims",
     "icons": [
         {
-            "src": "/tosidrop-logo-192x192.png",
+            "src": "logo-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/tosidrop-logo-512x512.png",
+            "src": "logo-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
         }
     ],
-    "theme_color": "#c7d5f4",
-    "background_color": "#c7d5f4",
-    "start_url": "https://tosidrop.io",
+    "theme_color": "#121212",
+    "background_color": "#121212",
+    "start_url": "https://discoin.blinklabs.io",
     "display": "standalone"
 }

@@ -1,5 +1,5 @@
-import TokenInfoTooltip from "../TokenInfoTooltip";
-import TosifeeTooltip from "../TosifeeTooltip";
+// import TokenInfoTooltip from "../TokenInfoTooltip";
+import ClaimFeeTooltip from "../ClaimFeeTooltip";
 import "./index.scss";
 
 interface Props {
@@ -38,8 +38,8 @@ const ClaimableTokenBox = ({
       <div className="w-full flex flex-row items-center">
         <div className="text-sm">{amount} available</div>
         <div className="ml-auto flex flex-row align-center gap-2">
-          <TokenInfoTooltip price={price} total={total}></TokenInfoTooltip>
-          {premium ? <TosifeeTooltip></TosifeeTooltip> : null}
+          {/* No token info <TokenInfoTooltip price={price} total={total}></TokenInfoTooltip> */}
+          {premium ? <ClaimFeeTooltip></ClaimFeeTooltip> : null}
         </div>
       </div>
       <img alt="logo" src={logo} className="h-24"></img>

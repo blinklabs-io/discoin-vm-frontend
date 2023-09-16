@@ -1,10 +1,10 @@
 {
-  "name": "tosidrop-server",
+  "name": "claim-bff",
   "version": "1.0.0",
-  "description": "TosiDrop Express Router",
+  "description": "Claims Express Router",
   "repository": {
     "type": "git",
-    "url": "git://github.com/TosiDrop/vm-frontend.git"
+    "url": "git://github.com/blinklabs-io/discoin-vm-frontend.git"
   },
   "engines": {
     "node": ">=18",

@@ -2,14 +2,14 @@ name: publish
 
 on:
   push:
-    branches: ['master']
+    branches: ['main']
     tags: ['v*.*.*']
 
 concurrency: ${{ github.ref }}
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: tosidrop/vm-frontend
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-amd64:

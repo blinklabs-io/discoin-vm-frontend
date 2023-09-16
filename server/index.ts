@@ -9,13 +9,11 @@ import url from "url";
 import {
   Dto,
   GetDeliveredRewardsDto,
-  GetPoolsDto,
   GetQueueDto,
   ServerErrorDto,
 } from "../client/src/entities/dto";
 import { Tip, TransactionStatus } from "../client/src/entities/koios.entities";
 import { VmTypes } from "../client/src/entities/vm";
-import { PoolInfo } from "../client/src/entities/vm.entities";
 import errorHandlerMiddleware, {
   errorHandlerWrapper,
   typedErrorHandlerWrapper,
@@ -25,14 +23,13 @@ import TxRouter from "./routes/tx";
 import UtilRouter from "./routes/util";
 import {
   CardanoNetwork,
-  ITosiFeatures,
+  IClaimFeatures,
   getAccountsInfo,
   getDeliveredRewards,
   getEpochParams,
   getFromKoios,
   getFromVM,
   getPoolMetadata,
-  getPools,
   getRewards,
   postFromKoios,
   sanitizeString,
@@ -49,21 +46,21 @@ export const VM_KOIOS_URL =
   process.env.KOIOS_URL_TESTNET || process.env.KOIOS_URL;
 export const CARDANO_NETWORK =
   process.env.CARDANO_NETWORK || CardanoNetwork.preview;
-export const TOSIDROP_ADMIN_KEY =
-  process.env.TOSIDROP_ADMIN_KEY || "admin key is not set";
+export const CLAIM_ADMIN_KEY =
+  process.env.CLAIM_ADMIN_KEY || "admin key is not set";
 const CLOUDFLARE_PSK = process.env.CLOUDFLARE_PSK;
 const LOG_TYPE = process.env.LOG_TYPE || "dev";
 const PORT = process.env.PORT || 3000;
-const TOSIFEE = process.env.TOSIFEE || 500000;
-const TOSIFEE_WHITELIST = process.env.TOSIFEE_WHITELIST;
+const CLAIMFEE = process.env.CLAIM_FEE || 500000;
+const CLAIMFEE_WHITELIST = process.env.CLAIM_FEE_WHITELIST;
 const CLAIM_ENABLED = process.env.CLAIM_ENABLED === "true";
 const ERGO_ENABLED = process.env.ERGO_ENABLED === "true";
 
 const oapi = openapi({
   openapi: "3.0.0",
   info: {
-    title: "TosiDrop",
-    description: "Generated API docs for TosiDrop",
+    title: "Claims",
+    description: "Generated API docs for Claims",
     version: "1",
   },
 });
@@ -72,7 +69,7 @@ const app = express();
 app.use(express.json());
 app.use(require("morgan")(LOG_TYPE));
 app.use(oapi);
-app.use("/swaggerui", oapi.swaggerui);
+// app.use("/swaggerui", oapi.swaggerui);
 app.use(express.static("../client/build"));
 
 const resp200Ok = {
@@ -120,31 +117,6 @@ const resp200Ok500Bad = {
 app.use("/api/tx", TxRouter);
 app.use("/api/util", UtilRouter);
 app.use("/api/admin", AdminRouter);
-
-app.get(
-  "/api/getpools",
-  oapi.path(resp200Ok),
-  errorHandlerWrapper(async (_req: Request, res: Response<GetPoolsDto>) => {
-    const pools = await getPools();
-    const whitelist = TOSIFEE_WHITELIST ? TOSIFEE_WHITELIST.split(",") : [];
-    const whitelistedPools: PoolInfo[] = [];
-    const regularPools: PoolInfo[] = [];
-    Object.values(pools).forEach((pool) => {
-      if (pool.visible === "f" || pool.id.includes("project_")) {
-        return;
-      }
-      if (whitelist.includes(pool.id)) {
-        whitelistedPools.push(pool);
-      } else {
-        regularPools.push(pool);
-      }
-    });
-    return res.status(200).send({
-      whitelistedPools: _.shuffle(whitelistedPools),
-      regularPools: _.shuffle(regularPools),
-    });
-  })
-);
 
 app.get(
   "/api/getsettings",
@@ -200,9 +172,9 @@ app.get(
 app.get(
   "/features",
   errorHandlerWrapper((_req: Request, res: Response) => {
-    const features: ITosiFeatures = {
-      tosi_fee: Number(TOSIFEE),
-      tosi_fee_whitelist: TOSIFEE_WHITELIST,
+    const features: IClaimFeatures = {
+      claim_fee: Number(CLAIMFEE),
+      claim_fee_whitelist: CLAIMFEE_WHITELIST,
       claim_enabled: CLAIM_ENABLED,
       network: CARDANO_NETWORK,
       ergo_enabled: ERGO_ENABLED,
@@ -424,7 +396,7 @@ app.get(
     if (poolInfo != null) {
       poolInfo.isWhitelisted = false;
 
-      const whitelist = TOSIFEE_WHITELIST ? TOSIFEE_WHITELIST.split(",") : [];
+      const whitelist = CLAIMFEE_WHITELIST ? CLAIMFEE_WHITELIST.split(",") : [];
       if (whitelist.includes(poolInfo.delegated_pool_id_bech32)) {
         poolInfo.isWhitelisted = true;
       }
@@ -527,18 +499,18 @@ app.get(
     }
 
     if (unlock === "true") {
-      if (TOSIFEE_WHITELIST) {
-        const whitelist = TOSIFEE_WHITELIST.split(",");
+      if (CLAIMFEE_WHITELIST) {
+        const whitelist = CLAIMFEE_WHITELIST.split(",");
         const accountsInfo = await getAccountsInfo(`${stakeAddress}`);
         const accountInfo = accountsInfo[0];
         if (whitelist.includes(accountInfo.delegated_pool)) {
           vmArgs += "&unlocks_special=true";
           isWhitelisted = true;
         } else {
-          vmArgs += `&overhead_fee=${TOSIFEE}&unlocks_special=true`;
+          vmArgs += `&overhead_fee=${CLAIMFEE}&unlocks_special=true`;
         }
       } else {
-        vmArgs += `&overhead_fee=${TOSIFEE}&unlocks_special=true`;
+        vmArgs += `&overhead_fee=${CLAIMFEE}&unlocks_special=true`;
       }
     } else {
       vmArgs += "&unlocks_special=false";
@@ -820,17 +792,6 @@ app.get(
       getTipResponse && getTipResponse.length ? getTipResponse[0].epoch_no : 0
     );
     return res.send(getEpochParamsResponse);
-  })
-);
-
-app.get(
-  "/api/getprojects",
-  oapi.path(resp200Ok),
-  errorHandlerWrapper(async (_req: Request, res: Response) => {
-    const projects = JSON.parse(
-      fs.readFileSync(__dirname + "/public/json/projects.json", "utf8")
-    );
-    return res.status(200).send(projects);
   })
 );
 
