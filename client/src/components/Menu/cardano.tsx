@@ -11,7 +11,6 @@ import {
   faClockRotateLeft,
   faCubesStacked,
   faMessage,
-  faProjectDiagram,
   faWallet,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,27 +23,27 @@ import {
 
 export const socialMediaItems: Record<string, SocialMediaItem> = {
   twitter: {
-    url: "https://twitter.com/TosiDrop",
+    url: "https://twitter.com/JaelCartel",
     colorClassname: "text-twitter",
     icon: faTwitter,
   },
   discord: {
-    url: "https://discord.gg/C32Mm3j4fG",
+    url: "https://discord.gg/Cjnbkp2qbq",
     colorClassname: "text-discord",
     icon: faDiscord,
   },
-  telegram: {
-    url: "https://t.me/+FdDUmLsW8jI0YmUx",
-    colorClassname: "text-telegram",
-    icon: faTelegram,
-  },
-  medium: {
-    url: "https://medium.com/@tosidrop",
-    colorClassname: "text",
-    icon: faMedium,
-  },
+  // telegram: {
+  //   url: "",
+  //   colorClassname: "text-telegram",
+  //   icon: faTelegram,
+  // },
+  // medium: {
+  //   url: "",
+  //   colorClassname: "text",
+  //   icon: faMedium,
+  // },
   github: {
-    url: "https://github.com/TosiDrop",
+    url: "https://github.com/blinklabs-io/discoin-vm-frontend",
     colorClassname: "text",
     icon: faGithub,
   },
@@ -52,28 +51,16 @@ export const socialMediaItems: Record<string, SocialMediaItem> = {
 
 export const menuItems: Record<string, MenuItem> = {
   claim: {
-    text: "Claim",
+    text: "Claim Rewards",
     to: PageRoute.claimCardano,
     activeRoute: [PageRoute.claimCardano, PageRoute.depositCardano],
     icon: faWallet,
   },
   history: {
-    text: "History",
+    text: "Claim History",
     to: PageRoute.historyCardano,
     activeRoute: [PageRoute.historyCardano],
     icon: faClockRotateLeft,
-  },
-  projects: {
-    text: "Projects",
-    to: PageRoute.projectsCardano,
-    activeRoute: [PageRoute.projectsCardano],
-    icon: faProjectDiagram,
-  },
-  pools: {
-    text: "Stake Pools",
-    to: PageRoute.poolsCardano,
-    activeRoute: [PageRoute.poolsCardano],
-    icon: faCubesStacked,
   },
   // dashboard: {
   //   text: "Dashboard",
@@ -81,12 +68,6 @@ export const menuItems: Record<string, MenuItem> = {
   //   activeRoute: [PageRoute.dashboardCardano],
   //   icon: faTableColumns,
   // },
-  feedback: {
-    text: "Feedback",
-    to: PageRoute.feedback,
-    activeRoute: [PageRoute.feedback],
-    icon: faMessage,
-  },
 };
 
 export default function MenuCardano() {
@@ -139,11 +120,11 @@ export default function MenuCardano() {
                 <a
                   target="_blank"
                   rel="noreferrer"
-                  href="https://docs.tosidrop.io/"
+                  href="https://docs.discoin.family/"
                   className="flex flex-row items-center gap-2 text-inactive"
                 >
                   <FontAwesomeIcon className="w-4" icon={faBook} />
-                  Docs
+                  Discoin Docs
                   <FontAwesomeIcon
                     className="w-4"
                     icon={faArrowUpRightFromSquare}

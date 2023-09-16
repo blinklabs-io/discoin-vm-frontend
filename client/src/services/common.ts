@@ -1,9 +1,8 @@
 import axios from "axios";
 import { CardanoTypes } from "src/entities/cardano";
 import { PopUpInfo } from "src/entities/common.entities";
-import { Dto, GetPoolsDto, GetQueueDto } from "src/entities/dto";
+import { Dto, GetQueueDto } from "src/entities/dto";
 import { EpochParams, Tip } from "src/entities/koios.entities";
-import { ProjectData } from "src/entities/project.entities";
 
 export async function getFeatures() {
   const response = await axios.get(`/features`);
@@ -49,18 +48,8 @@ export async function getNetworkId(): Promise<CardanoTypes.NetworkId> {
   return CardanoTypes.NetworkId.undefined;
 }
 
-export async function getProjects(): Promise<ProjectData[]> {
-  const response = await axios.get(`/api/getprojects`);
-  return response.data;
-}
-
 export async function getPopUpInfo(): Promise<PopUpInfo> {
   const response = await axios.get(`/api/getpopupinfo`);
-  return response.data;
-}
-
-export async function getPools(): Promise<GetPoolsDto> {
-  const response = await axios.get(`/api/getpools`);
   return response.data;
 }
 

@@ -44,7 +44,7 @@ export const InfoModal = () => {
       {renderIcon()}
       <div className="text-center">{text}</div>
       <button
-        className="tosi-button py-2.5 px-6 rounded-lg text-center w-fit"
+        className="claim-button py-2.5 px-6 rounded-lg text-center w-fit"
         onClick={() => dispatch(hideModal())}
       >
         Ok

@@ -1,7 +1,7 @@
 import { DeliveredReward } from "./common.entities";
 import { MinswapTypes } from "./minswap";
 import { VmTypes } from "./vm";
-import { Assets, ClaimableToken, PoolInfo, VmPoolInfo } from "./vm.entities";
+import { Assets, ClaimableToken, VmPoolInfo } from "./vm.entities";
 
 export interface GetRewardsDto {
   claimable_tokens: ClaimableToken[];
@@ -25,11 +25,6 @@ export interface GetRewardsDto {
 
 export interface GetQueueDto {
   pending_tx: number;
-}
-
-export interface GetPoolsDto {
-  whitelistedPools: PoolInfo[];
-  regularPools: PoolInfo[];
 }
 
 export interface GetDeliveredRewardsDto {

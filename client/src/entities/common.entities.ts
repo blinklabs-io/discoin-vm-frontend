@@ -101,16 +101,10 @@ export enum PageRoute {
   depositCardano = "/cardano/deposit",
   historyCardano = "/cardano/history",
   dashboardCardano = "/cardano/dashboard",
-  projectsCardano = "/cardano/projects",
-  feedbackCardano = "/cardano/feedback",
-  poolsCardano = "/cardano/pools",
   claimErgo = "/ergo/claim",
   depositErgo = "/ergo/deposit",
   historyErgo = "/ergo/history",
   dashboardErgo = "/ergo/dashboard",
-  projectsErgo = "/ergo/projects",
-  feedbackErgo = "/ergo/feedback",
-  feedback = "/feedback",
 }
 
 export interface MenuItem {

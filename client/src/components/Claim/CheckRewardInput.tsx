@@ -40,7 +40,7 @@ export default function CheckRewardInput({
       ></input>
       <div className="flex flex-row items-center">
         <button
-          className="tosi-button py-2.5 px-5 rounded-lg flex flex-row items-center"
+          className="claim-button py-2.5 px-5 rounded-lg flex flex-row items-center"
           disabled={!isSearchDisabledAndStakingInfoShown}
           onClick={checkRewards}
         >
@@ -52,12 +52,12 @@ export default function CheckRewardInput({
           ) : null}
         </button>
         <button
-          className={`tosi-button py-2.5 px-5 rounded-lg ml-5 ${
+          className={`claim-button py-2.5 px-5 rounded-lg ml-5 ${
             isSearchDisabledAndStakingInfoShown ? " hidden" : ""
           }`}
           onClick={cancelClaim}
         >
-          <div className="tosi-cancel-text">Cancel</div>
+          <div className="claim-cancel-text">Cancel</div>
         </button>
       </div>
     </div>
