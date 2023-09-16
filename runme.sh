@@ -2,7 +2,7 @@
 
 __repo=$(cd $(dirname ${BASH_SOURCE[0]}); pwd -P)
 
-VM_BRANCH=${VM_BRANCH:-master}
+VM_BRANCH=${VM_BRANCH:-main}
 
 ###
 # Check for .env
