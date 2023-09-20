@@ -6,7 +6,7 @@ import { GetCustomRewards, GetRewardsDto } from "../entities/vm.entities";
 export async function getRewards(
   address: string
 ): Promise<GetRewardsDto | undefined> {
-  const response = await axios.get(`/api/getrewards?address=${address}`);
+  const response = await axios.get(`${process.env.REACT_APP_CLAIM_API}/api/getrewards?address=${address}`);
   if (response && response.data) {
     return response.data;
   }
@@ -20,7 +20,7 @@ export async function getCustomRewards(
   unlock: boolean
 ): Promise<GetCustomRewards | undefined> {
   const response = await axios.get(
-    `/api/getcustomrewards?staking_address=${staking_address}&session_id=${session_id}&selected=${selected}&unlock=${
+    `${process.env.REACT_APP_CLAIM_API}/api/getcustomrewards?staking_address=${staking_address}&session_id=${session_id}&selected=${selected}&unlock=${
       unlock ? "true" : "false"
     }`
   );
@@ -34,7 +34,7 @@ export async function getDeliveredRewards(
   stakingAddress: string
 ): Promise<GetDeliveredRewardsDto> {
   const response = await axios.get(
-    `/api/getdeliveredrewards?staking_address=${stakingAddress}`
+    `${process.env.REACT_APP_CLAIM_API}/api/getdeliveredrewards?staking_address=${stakingAddress}`
   );
   return response.data;
 }
@@ -43,7 +43,7 @@ export async function getTransactionStatus(
   txHash: string
 ): Promise<TransactionStatus[] | undefined> {
   const response = await axios.get(
-    `/api/gettransactionstatus?txHash=${txHash}`
+    `${process.env.REACT_APP_CLAIM_API}/api/gettransactionstatus?txHash=${txHash}`
   );
   if (response && response.data) {
     return response.data;
@@ -53,7 +53,7 @@ export async function getTransactionStatus(
 
 export async function getTxStatus(request_id: string, session_id: string) {
   const response = await axios.get(
-    `/api/txstatus?request_id=${request_id}&session_id=${session_id}`
+    `${process.env.REACT_APP_CLAIM_API}/api/txstatus?request_id=${request_id}&session_id=${session_id}`
   );
   return response.data;
 }
