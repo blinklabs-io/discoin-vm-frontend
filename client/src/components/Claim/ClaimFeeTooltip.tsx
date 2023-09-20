@@ -9,7 +9,8 @@ export default function ClaimFeeTooltip() {
         icon={faStar}
       />
       <div className="tooltip w-64 p-3.5 rounded-2xl right-5 bottom-5 absolute">
-        A fee is applied to tokens distributed by this service.
+        A fee is applied to tokens distributed by this service. This fee goes to
+        the Neo Miami treasury.
       </div>
     </span>
   );

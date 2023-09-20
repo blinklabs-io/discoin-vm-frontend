@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import logoDark from "src/assets/silktoad.png";
-import logoLight from "src/assets/silktoad.png";
+import logoDark from "src/assets/discoin.png";
+import logoLight from "src/assets/discoin.png";
 import { Blockchain, Themes } from "src/entities/common.entities";
 import { toggleMenu, toggleTheme } from "src/reducers/globalSlice";
 import { RootState } from "src/store";
@@ -42,9 +42,9 @@ function Header() {
             <img
               src={theme === Themes.dark ? logoDark : logoLight}
               className="h-10 logo"
-              alt="silktoad logo"
+              alt="discoin logo"
             ></img>
-            <div className="m-auto ml-5 text-4xl">The Silk Toad</div>
+            <div className="m-auto ml-5 text-4xl">discoin claims</div>
           </div>
         </Link>
         <div className="flex flex-row gap-4 items-center ml-auto">
@@ -73,9 +73,9 @@ function Header() {
           <img
             src={theme === Themes.dark ? logoDark : logoLight}
             className="h-10 logo"
-            alt="silktoad logo"
+            alt="discoin logo"
           ></img>
-          <div className="m-auto mr-2.5 text-4xl">The Silk Toad</div>
+          <div className="m-auto mr-2.5 text-4xl">discoin claims</div>
         </div>
         <div className="w-14 h-full ml-auto">
           {/* No blockchain selector <BlockchainSelector isMobile={true}></BlockchainSelector> */}
