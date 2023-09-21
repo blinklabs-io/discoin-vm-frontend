@@ -79,9 +79,9 @@ const TransactionDetail = ({
             {lovelaceToAda(settings.claimFee)} ADA
           </div>
           <div className="tooltip-activator cursor-help text-right">
-            Fee <FontAwesomeIcon icon={faQuestionCircle} />
+            Community discoin fee <FontAwesomeIcon icon={faQuestionCircle} />
             <div className="tooltip p-3.5 rounded-2xl right-5 bottom-4 absolute min-w-52 max-w-64">
-              Fee is applied to tokens that use this service
+              Community fee for claiming discoin which goes to the Neo Miami treasury
             </div>
           </div>
         </div>

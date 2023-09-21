@@ -1,6 +1,6 @@
-# vm-frontend
+# discoin-vm-frontend
 
-Welcome to the Silk Toad VM Frontend!
+Welcome to the discoin VM Frontend!
 
 ## About
 The code is split into two projects, an Express API which serves as a backend
