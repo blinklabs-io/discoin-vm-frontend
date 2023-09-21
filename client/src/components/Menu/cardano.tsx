@@ -139,7 +139,7 @@ export default function MenuCardano() {
                     key={socialMediaItem.url}
                     socialMediaItem={socialMediaItem}
                   />
-                )
+                ),
               )}
             </div>
           </div>
