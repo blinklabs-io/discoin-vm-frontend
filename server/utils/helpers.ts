@@ -44,9 +44,9 @@ export function sanitizeString(input: string) {
 export async function translateAdaHandle(
   handle: string,
   network: any,
-  koiosUrl: string
+  koiosUrl: string,
 ) {
-  let urlPrefix, policyId : string;
+  let urlPrefix, policyId: string;
 
   handle = handle.toLowerCase();
 
@@ -66,31 +66,44 @@ export async function translateAdaHandle(
   if (handle.length === 0) {
     throw createErrorWithCode(
       HttpStatusCode.BAD_REQUEST,
-      "Handle is malformed"
+      "Handle is malformed",
     );
   }
-  const handleInHex : string = Buffer.from(handle).toString("hex");
-  const address222  : string  =  await resolveAddress("000de140"+handleInHex, policyId , koiosUrl);
-  if (address222) return address222;
-  const address314 : string  =  await resolveAddress("0013ab30"+handleInHex , policyId , koiosUrl);
-  if (address314)  return address314;
-
-  const address = await resolveAddress(handleInHex , policyId , koiosUrl);
-  if (address) return address; else throw createErrorWithCode(
-    HttpStatusCode.NOT_FOUND,
-    "Handle does not exist"
+  const handleInHex: string = Buffer.from(handle).toString("hex");
+  const address222: string = await resolveAddress(
+    "000de140" + handleInHex,
+    policyId,
+    koiosUrl,
   );
+  if (address222) return address222;
+  const address314: string = await resolveAddress(
+    "0013ab30" + handleInHex,
+    policyId,
+    koiosUrl,
+  );
+  if (address314) return address314;
 
+  const address = await resolveAddress(handleInHex, policyId, koiosUrl);
+  if (address) return address;
+  else
+    throw createErrorWithCode(
+      HttpStatusCode.NOT_FOUND,
+      "Handle does not exist",
+    );
 
-  async function resolveAddress(handleInHex: string , policyId: string , koiosUrl: string ){
+  async function resolveAddress(
+    handleInHex: string,
+    policyId: string,
+    koiosUrl: string,
+  ) {
     const url = `${koiosUrl}/asset_address_list?_asset_policy=${policyId}&_asset_name=${handleInHex}`;
-  
+
     const data = (await axios.get(url)).data;
-  
+
     if (data.length === 0) {
       return null;
     }
-  
+
     const address = data[0].payment_address;
     return address;
   }
@@ -105,7 +118,7 @@ export async function getFromVM<T>(params: any) {
 }
 
 export async function getExtendedMetadata(
-  metadataUrl: string
+  metadataUrl: string,
 ): Promise<ExtendedMetadata | undefined> {
   const metadata = (await axios.get<Metadata>(metadataUrl)).data;
   if (metadata?.extended) {
@@ -324,7 +337,7 @@ export async function getRewards(stakeAddress: string) {
 export function formatTokens(
   amount: string | undefined,
   decimals: number | undefined,
-  decimalsToShow: number | undefined = decimals
+  decimalsToShow: number | undefined = decimals,
 ): string {
   decimals = decimals === null ? 6 : decimals;
   if (amount && decimals && decimalsToShow && decimals > 0) {
@@ -352,7 +365,7 @@ export function formatTokens(
 export function getTokenValue(
   assetId: string,
   amount: number,
-  prices: GetPricePairs
+  prices: GetPricePairs,
 ): {
   price: string;
   total: string;
@@ -378,11 +391,11 @@ export function getTokenValue(
 }
 
 export async function getDeliveredRewards(
-  stakingAddress: string
+  stakingAddress: string,
 ): Promise<DeliveredReward[]> {
   const [vmDeliveredRewards, tokenInfo] = await Promise.all([
     getFromVM<VmDeliveredReward[]>(
-      `delivered_rewards&staking_address=${stakingAddress}`
+      `delivered_rewards&staking_address=${stakingAddress}`,
     ),
     getTokens(),
   ]);
@@ -391,7 +404,7 @@ export async function getDeliveredRewards(
 
 export function parseVmDeliveredRewards(
   vmDeliveredRewards: VmDeliveredReward[],
-  tokenInfo: VmTokenInfoMap
+  tokenInfo: VmTokenInfoMap,
 ): DeliveredReward[] {
   type RewardMap = Record<string, DeliveredReward>;
   const rewardMap: RewardMap = {};
