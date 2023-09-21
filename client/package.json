@@ -42,7 +42,6 @@
     "eject": "react-scripts eject",
     "format": "npx prettier --write src"
   },
-  "proxy": "http://localhost:3000",
   "eslintConfig": {
     "extends": [
       "react-app",
