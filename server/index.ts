@@ -72,7 +72,9 @@ app.use(require("morgan")(LOG_TYPE));
 app.use(oapi);
 app.use(cors({origin: '*'}));
 // app.use("/swaggerui", oapi.swaggerui);
-app.use(express.static("../client/build"));
+if (CLAIM_ENABLED) {
+  app.use(express.static("../client/build"));
+}
 
 const resp200Ok = {
   responses: {
@@ -820,12 +822,14 @@ app.get(
 app.use("/api/img", express.static(__dirname + "/public/img"));
 
 // Fallback to React app
-app.get(
-  "*",
-  errorHandlerWrapper((_req: Request, res: Response) => {
-    return res.sendFile("client/build/index.html", { root: "../" });
-  })
-);
+if (CLAIM_ENABLED) {
+  app.get(
+    "*",
+    errorHandlerWrapper((_req: Request, res: Response) => {
+      return res.sendFile("client/build/index.html", { root: "../" });
+    })
+  );
+}
 
 const server = app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
