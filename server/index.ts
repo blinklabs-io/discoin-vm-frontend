@@ -51,6 +51,8 @@ export const CLAIM_ADMIN_KEY =
   process.env.CLAIM_ADMIN_KEY || "admin key is not set";
 const CLOUDFLARE_PSK = process.env.CLOUDFLARE_PSK;
 const LOG_TYPE = process.env.LOG_TYPE || "dev";
+const NATIVE_TOKEN_FEE = process.env.NATIVE_TOKEN_FEE || 500000;
+const NATIVE_TOKEN_ID = process.env.NATIVE_TOKEN_ID;
 const PORT = process.env.PORT || 3000;
 const CLAIMFEE = process.env.CLAIM_FEE || 500000;
 const CLAIMFEE_WHITELIST = process.env.CLAIM_FEE_WHITELIST;
@@ -180,6 +182,8 @@ app.get(
       claim_fee: Number(CLAIMFEE),
       claim_fee_whitelist: CLAIMFEE_WHITELIST,
       claim_enabled: CLAIM_ENABLED,
+      native_token_fee: Number(NATIVE_TOKEN_FEE),
+      native_token_id: NATIVE_TOKEN_ID,
       network: CARDANO_NETWORK,
       ergo_enabled: ERGO_ENABLED,
     };
@@ -440,6 +444,11 @@ app.get(
         in: "query",
         required: false,
       },
+      {
+        name: "native",
+        in: "query",
+        required: false,
+      },
     ],
     responses: {
       200: {
@@ -491,6 +500,7 @@ app.get(
       session_id,
       selected,
       unlock,
+      native,
     } = queryObject;
     let vmArgs = `custom_request&staking_address=${stakeAddress}&session_id=${session_id}&selected=${selected}&xwallet=true`;
     let isWhitelisted = false;
@@ -515,6 +525,20 @@ app.get(
         }
       } else {
         vmArgs += `&overhead_fee=${CLAIMFEE}&unlocks_special=true`;
+      }
+    } else if (native === "true") {
+      if (CLAIMFEE_WHITELIST) {
+        const whitelist = CLAIMFEE_WHITELIST.split(",");
+        const accountsInfo = await getAccountsInfo(`${stakeAddress}`);
+        const accountInfo = accountsInfo[0];
+        if (whitelist.includes(accountInfo.delegated_pool)) {
+          vmArgs += "&unlocks_special=true";
+          isWhitelisted = true;
+        } else {
+          vmArgs += `&overhead_fee=${NATIVE_TOKEN_FEE}&unlocks_special=true`;
+        }
+      } else {
+        vmArgs += `&overhead_fee=${NATIVE_TOKEN_FEE}&unlocks_special=true`;
       }
     } else {
       vmArgs += "&unlocks_special=false";

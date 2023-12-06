@@ -9,10 +9,12 @@ interface Props {
   numberOfTokens: number;
   deposit: number;
   unlock: boolean;
+  native: boolean;
   isWhitelisted: boolean;
 }
 
 interface ISettings {
+  nativeFee: number;
   vmFee: number;
   txFee: number;
   claimFee: number;
@@ -22,9 +24,11 @@ const TransactionDetail = ({
   numberOfTokens,
   deposit,
   unlock,
+  native,
   isWhitelisted,
 }: Props) => {
   const [settings, setSettings] = useState<ISettings>({
+    nativeFee: 500000,
     vmFee: 0,
     txFee: 440000,
     claimFee: 500000,
@@ -37,6 +41,7 @@ const TransactionDetail = ({
       setSettings({
         ...settings,
         claimFee: settingsFromFeatures.claim_fee,
+        nativeFee: settingsFromFeatures.native_token_fee,
         vmFee: settingsFromVM.withdrawal_fee,
       });
     };
@@ -52,7 +57,12 @@ const TransactionDetail = ({
 
   const calcReturnedAda = () => {
     let returnedAda = deposit - settings.vmFee - calcTxFee();
-    if (unlock && !isWhitelisted) returnedAda -= settings.claimFee;
+    if (unlock || native) {
+      // unlock
+      if (unlock && !isWhitelisted) returnedAda -= settings.claimFee;
+      // only native, charging native fee
+      if (native && !unlock && !isWhitelisted) returnedAda -= settings.nativeFee;
+    }
     return returnedAda;
   };
 
@@ -73,10 +83,10 @@ const TransactionDetail = ({
         <div className="w-28 text-right">{lovelaceToAda(calcTxFee())} ADA</div>
         <div className="text-right">Transaction fee</div>
       </div>
-      {unlock && !isWhitelisted ? (
+      {(unlock || native) && !isWhitelisted ? (
         <div className="p-1 flex items-center flex-row-reverse border-b border-color text-premium">
           <div className="w-28 text-right">
-            {lovelaceToAda(settings.claimFee)} ADA
+            {lovelaceToAda(unlock ? settings.claimFee : settings.nativeFee)} ADA
           </div>
           <div className="tooltip-activator cursor-help text-right">
             Community discoin fee <FontAwesomeIcon icon={faQuestionCircle} />
