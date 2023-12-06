@@ -1,5 +1,6 @@
 // import TokenInfoTooltip from "../TokenInfoTooltip";
 import ClaimFeeTooltip from "../ClaimFeeTooltip";
+import NativefeeTooltip from "../NativefeeTooltip";
 import "./index.scss";
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
   logo: string;
   assetId: string;
   premium: boolean;
+  native: boolean;
 }
 
 const ClaimableTokenBox = ({
@@ -26,6 +28,7 @@ const ClaimableTokenBox = ({
   amount,
   logo,
   premium,
+  native,
 }: Props) => {
   return (
     <div
@@ -39,7 +42,7 @@ const ClaimableTokenBox = ({
         <div className="text-sm">{amount} available</div>
         <div className="ml-auto flex flex-row align-center gap-2">
           {/* No token info <TokenInfoTooltip price={price} total={total}></TokenInfoTooltip> */}
-          {premium ? <ClaimFeeTooltip></ClaimFeeTooltip> : null}
+          {native ? <NativefeeTooltip></NativefeeTooltip> : (premium ? <ClaimFeeTooltip></ClaimFeeTooltip> : null)}
         </div>
       </div>
       <img alt="logo" src={logo} className="h-24"></img>
