@@ -538,7 +538,7 @@ app.get(
           isWhitelisted = true;
         }
       } else {
-        const claimableTokens = await getRewards(stakeAddress);
+        const claimableTokens = await getRewards(`${stakeAddress}`);
         for (let token of claimableTokens) {
           if (token.native) {
             isNativeSelected = true;
