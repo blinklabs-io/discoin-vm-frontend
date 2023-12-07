@@ -72,7 +72,7 @@ const app = express();
 app.use(express.json());
 app.use(require("morgan")(LOG_TYPE));
 app.use(oapi);
-app.use(cors({origin: '*'}));
+app.use(cors({ origin: "*" }));
 // app.use("/swaggerui", oapi.swaggerui);
 if (CLAIM_ENABLED) {
   app.use(express.static("../client/build"));

@@ -61,7 +61,8 @@ const TransactionDetail = ({
       // unlock
       if (unlock && !isWhitelisted) returnedAda -= settings.claimFee;
       // only native, charging native fee
-      if (native && !unlock && !isWhitelisted) returnedAda -= settings.nativeFee;
+      if (native && !unlock && !isWhitelisted)
+        returnedAda -= settings.nativeFee;
     }
     return returnedAda;
   };
@@ -91,7 +92,8 @@ const TransactionDetail = ({
           <div className="tooltip-activator cursor-help text-right">
             Community discoin fee <FontAwesomeIcon icon={faQuestionCircle} />
             <div className="tooltip p-3.5 rounded-2xl right-5 bottom-4 absolute min-w-52 max-w-64">
-              Community fee for claiming discoin which goes to the Neo Miami treasury
+              Community fee for claiming discoin which goes to the Neo Miami
+              treasury
             </div>
           </div>
         </div>
