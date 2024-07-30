@@ -22,10 +22,10 @@ else
 		echo "You must give an API token!"
 		exit 1
 	fi
-	KOIOS_URL=https://preview.koios.rest/api/v0
+	KOIOS_URL=https://preview.koios.rest/api/v1
 	VM_URL=https://vmprev.adaseal.eu
 	if test "${CARDANO_NETWORK}" == "mainnet"; then
-		KOIOS_URL=https://koios.rest/api/v0
+		KOIOS_URL=https://koios.rest/api/v1
 		VM_URL=https://vm.adaseal.eu
 	fi
 	echo "VM_BRANCH=${VM_BRANCH}" > ${__repo}/.env
